@@ -1,6 +1,6 @@
 package com.nox.JavaBootCampAdvKafka.event;
 
-import com.nox.JavaBootCampAdvKafka.dto.PingMessageStatus;
+import com.nox.JavaBootCampAdvKafka.dto.PongMessageStatus;
 import com.nox.JavaBootCampAdvKafka.kafka.PongProducer;
 import com.nox.JavaBootCampAdvKafka.service.OutMessageEventService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class PongEventListener implements ApplicationListener<PongEvent> {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Async("threadPoolTaskExecutor")
     public void onApplicationEvent(PongEvent event) {
-        outMessageEventService.updatePongStatus(event.getMessage().getChainId(), PingMessageStatus.SENT.name());
+        outMessageEventService.updatePongStatus(event.getMessage().getChainId(), PongMessageStatus.SENT.name());
         pongProducer.sendPong(event.getMessage().getChainId());
     }
 }
